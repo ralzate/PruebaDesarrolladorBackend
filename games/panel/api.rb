@@ -80,5 +80,47 @@ module Panel
         return Oj.dump(success: false, error: "No pudo borrar' #{word.c}'")
       end
     end
+
+    post '/panel/numeric_puzzle/start' do
+      size = params[:size].to_i
+      puzzle = Games::NumericPuzzle.create(size: size, board: generate_board(size))
+      Oj.dump(success: true, puzzle_id: puzzle.id)
+    end
+
+    post '/panel/numeric_puzzle/move' do
+      puzzle = Games::NumericPuzzle.find(params[:puzzle_id])
+      row = params[:row].to_i
+      col = params[:col].to_i
+
+      if puzzle.valid_move?(row, col)
+        puzzle.make_move(row, col)
+        if puzzle.solved?
+          Oj.dump(success: true, message: 'Juego completado', board: puzzle.board)
+        else
+          Oj.dump(success: true, message: 'Movimiento exitoso', board: puzzle.board)
+        end
+      else
+        Oj.dump(success: false, error: 'Movimiento inválido')
+      end
+    end
+
+    get '/panel/numeric_puzzle/status' do
+      puzzle = Games::NumericPuzzle.find(params[:puzzle_id])
+      Oj.dump(board: puzzle.board, solved: puzzle.solved?)
+    end
+
+    private
+
+    def generate_board(size)
+      numbers = (1..size**2 - 1).to_a.shuffle  
+      numbers << nil  
+
+      board = []
+      numbers.each_slice(size) do |row|
+        board << row
+      end
+
+      board
+    end
   end
 end
