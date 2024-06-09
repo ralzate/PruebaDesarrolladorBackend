@@ -13,6 +13,8 @@ gem 'pry'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'faraday'
+gem 'net-http'
+gem 'bundler'
 
 group :test do
   gem 'fuubar'
