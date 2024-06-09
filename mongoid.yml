@@ -1,0 +1,24 @@
+development:
+  clients:
+    default:
+      database: games-dev
+      hosts:
+        - localhost:27017
+test:
+  clients:
+    default:
+      database: games-test
+      hosts:
+        - localhost:27017
+
+production:
+  clients:
+    default:
+      hosts:
+        - ds023932.mlab.com:23932
+      database: heroku_bv48j3db
+
+      options:
+        connect_timeout: 15
+        user: <%= ENV['MONGO_USER'] %>
+        password: <%= ENV['MONGO_PWD'] %>

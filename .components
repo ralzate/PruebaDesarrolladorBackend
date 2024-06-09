@@ -1,0 +1,9 @@
+---
+:orm: mongoid
+:test: rspec
+:mock: rr
+:script: jquery
+:renderer: haml
+:stylesheet: sass
+:namespace: Hangman
+:migration_format: number

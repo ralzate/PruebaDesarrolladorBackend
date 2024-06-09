@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../../main', __FILE__)
+include Games
+
+Pry.config.prompt = [ proc {"[#{Time.now.strftime("%H:%M:%S")}] #{ENV["RACK_ENV"]}> " }, proc { "...\t\t" }]
+Pry.start(TOPLEVEL_BINDING)
